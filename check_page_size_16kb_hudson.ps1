@@ -89,11 +89,14 @@ Write-Host "    <-- zipalign end."
 $soDumpOutput += "zipalign result:"
 $soDumpOutput += "      $lastLine"
 
-if (Test-Path "result.txt") {
-    Remove-Item -Path "result.txt" -Force
+$name = [System.IO.Path]::GetFileNameWithoutExtension($sourceFile)
+$resultPath = "result-$name.txt"
+
+if (Test-Path $resultPath) {
+    Remove-Item -Path $resultPath -Force
 }
 
-Set-Content -Path "result.txt" -Value $soDumpOutput -Encoding utf8
+Set-Content -Path $resultPath -Value $soDumpOutput -Encoding utf8
 
 Remove-Item -Path $tempDir -Recurse -Force
 
